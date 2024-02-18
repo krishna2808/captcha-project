@@ -7,7 +7,6 @@ RUN apt-get update -y && apt-get install nano -y && apt-get install nginx -y && 
 ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
 
-
 # Create directory and sub-directory for project
 
 RUN mkdir -p /app/project-captcha-controller/ 
