@@ -1,0 +1,13 @@
+[Unit]
+Description=gunicorn daemon
+Requires=gunicorn.socket
+After=network.target
+
+[Service]
+User=root
+Group=www-data
+WorkingDirectory=/app/project-captcha-controller/captcha-backend
+ExecStart=/app/project-captcha-controller/venv/bin/gunicorn --workers 3 --bind unix:/run/gunicorn.sock captcha_controller.wsgi:application
+
+[Install]
+WantedBy=multi-user.target

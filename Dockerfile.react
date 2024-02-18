@@ -1,0 +1,35 @@
+FROM node:alpine
+
+RUN mkdir -p /app/project-captcha-controller/
+
+ADD . /app/project-captcha-controller/
+
+WORKDIR /app/project-captcha-controller/captcha-frontend/
+
+#RUN apt update && apt install npm &&  apt install npx
+#COPY package.json package-lock.json .
+
+RUN npm install
+# Expose the port on which the application will run
+
+# Build the production-ready app
+RUN npm run build
+
+
+# Install a lightweight server to serve the application
+RUN npm install -g serve
+
+# Expose port 80 for the application
+EXPOSE 80
+
+# Define the command to run the server and serve the build files
+CMD ["serve", "-s", "build", "-l", "80"]
+
+
+
+#RUN npm audit fix --force
+#EXPOSE 3000
+
+#COPY build/ .
+
+#CMD ["npm", "start"]

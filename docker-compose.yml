@@ -1,0 +1,61 @@
+version: '2'
+
+
+services:
+
+    captcha_frontend:
+         container_name: captcha.frontend
+
+         build:
+            context: .
+            dockerfile: Dockerfile.react
+    #     volumes:
+    #         # source_code : destination_code # source code to --> to destination code
+    #         #- frontend_container_data:/app/project-bicycle/fronend
+         ports:
+             - 80:80
+
+         environment:
+             DEBUG: "True"
+
+
+    captcha_backend:
+        restart: unless-stopped
+        container_name: captcha.backend
+        build:
+            context: .
+            #dockerfile: bicycle/docker/Dockerfile
+        entrypoint: /app/project-captcha-controller/captcha-backend/docker/backend/entry-point/server-entrypoint.sh
+        volumes:
+            - backend_container_data:/app/project-captcha-controller/captcha-backend/
+        ports:
+            - 8000:8000
+        environment:
+            DEBUG: "True"
+            CELERY_BROKER_URL: "redis://redis:6379/0"
+            CELERY_RESULT_BACKEND: "redis://redis:6379/0"
+            DJANGO_DB: captcha
+            MYSQL_HOST: mysql.captcha
+            MYSQL_NAME: mysql
+            MYSQL_USER: root
+            MYSQL_PASSWORD: password
+            MYSQL_PORT: 3306
+        depends_on:
+            - mysql
+
+    mysql:
+        image: mysql:8
+        container_name: 'mysql.captcha'
+        environment:
+          MYSQL_ROOT_PASSWORD: password
+          MYSQL_DATABASE: captcha
+        ports:
+          - 3306:3306
+        volumes:
+          - mysql-container-data:/var/lib/mysql
+
+
+volumes:
+    mysql-container-data:
+    backend_container_data:
+

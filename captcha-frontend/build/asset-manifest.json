@@ -1,0 +1,22 @@
+{
+  "files": {
+    "main.css": "/static/css/main.91437fa7.css",
+    "main.js": "/static/js/main.b75149c0.js",
+    "static/js/787.07aa837e.chunk.js": "/static/js/787.07aa837e.chunk.js",
+    "static/media/paytm_logo.png": "/static/media/paytm_logo.eb206b16580235661e7e.png",
+    "static/media/gpay_logo.png": "/static/media/gpay_logo.b4ca341a5b899ccf9505.png",
+    "static/media/all_upi_icons.png": "/static/media/all_upi_icons.5d6e51163db5f5e820df.png",
+    "static/media/phonepe_logo.png": "/static/media/phonepe_logo.27083ce2130b2111d303.png",
+    "static/media/bg-marketing.svg": "/static/media/bg-marketing.bd335fdbfcd8d06347ef.svg",
+    "static/media/m1.svg": "/static/media/m1.021e5afc88eb4c8aa0717ccb5aba4073.svg",
+    "static/media/m2.svg": "/static/media/m2.7d7e3e507b4dedb05531512db827f8e6.svg",
+    "index.html": "/index.html",
+    "main.91437fa7.css.map": "/static/css/main.91437fa7.css.map",
+    "main.b75149c0.js.map": "/static/js/main.b75149c0.js.map",
+    "787.07aa837e.chunk.js.map": "/static/js/787.07aa837e.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.91437fa7.css",
+    "static/js/main.b75149c0.js"
+  ]
+}

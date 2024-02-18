@@ -1,0 +1,121 @@
+import React,{ useRef } from "react";
+import { useEffect, useState } from "react";
+import { useParams, useNavigate } from "react-router-dom";
+import { axiosInstance } from "../utils/fetchUtitls";
+import QrCode from "../images/demo_qr.png";
+import All_upi_icons from "../images/all_upi_icons.png"
+import TransactionForm from "../components/Trasaction";
+import PhonePeLogo from '../images/phonepe_logo.png'
+import PaytmLogo from '../images/paytm_logo.png'
+import GpayLogo from '../images/gpay_logo.png'	
+import { isMobile } from "react-device-detect";
+import {merchantId} from '../utils/constants'
+const icon_style = {
+    width:"80px",
+}
+const AddFunds = () => {
+  const textRef = useRef(null);
+    const [amount, setAmount] = useState(null);
+
+function generateTransactionId() {
+  const timestamp = new Date().getTime();
+  const randomString = Math.random().toString(36).substr(2, 9); // Generate a random string
+
+  return `${timestamp}-${randomString}`;
+}
+
+const handleUpiAppPayment = (processsor)=>{
+  if(!amount){
+   alert("Please Enter Amount First !")
+   return
+   }
+  if(processor == 'phonepe'){
+     const transactionId = generateTransactionId();  
+   }
+  else if(processor == 'gpay'){}
+  else if(processor == 'paytm'){}
+}
+
+const copyToClipboard = () => {
+    const textToCopy = textRef.current.innerText;
+    if (!navigator.clipboard) {
+      fallbackCopyTextToClipboard(textToCopy);
+      return;
+    }
+    navigator.clipboard.writeText(textToCopy)
+      .then(() => {
+        console.log('Text copied to clipboard!');
+      })
+      .catch(err => {
+        console.error('Failed to copy: ', err);
+      });
+  };
+
+  const fallbackCopyTextToClipboard = (textToCopy) => {
+    var textArea = document.createElement("textarea");
+    textArea.value = textToCopy;
+    document.body.appendChild(textArea);
+    textArea.focus();
+    textArea.select();
+
+    try {
+      document.execCommand('copy');
+      console.log('Text copied to clipboard!');
+    } catch (err) {
+      console.error('Failed to copy: ', err);
+    }
+
+    document.body.removeChild(textArea);
+  };
+
+  const navigate = useNavigate();
+  // const [planData, setPlanData] = useState({
+  //   planName: "",
+  //   planPrice: "",
+  //   planReferrals: "",
+  //   planDailyLimit: "",
+  // });
+  // const { paramValue } = useParams(); // if not found then renavigate to plans page
+  // console.log({paramValue});
+  // if (!paramValue) {
+  //   console.log("no plans selected");
+  //   navigate("/plans");
+  // }
+
+
+  // useEffect(() => {
+  //   // call the backend to provide plan details
+  //   axiosInstance
+  //     .get(`api/plan-details?planId=${paramValue}`, { planId: paramValue })
+  //     .then((res) => {
+  //       //we got to load this page with selected plan details here
+  //       setPlanData(res.data);
+  //     })
+  //     .catch((err) => {
+  //       debugger
+  //       console.log({ err });
+  //     });
+  // }, [paramValue]);
+  // console.log({ planData });
+
+  return (
+    <div className="purchase-plan">
+      <div className="wrapper">
+        <div>        <span className="number" ref={textRef}>+91-9999966666</span> <button onClick={copyToClipboard}>Copy UPI-ID</button> </div>
+        <img className="qr-img" src={QrCode} alt="QrImage" />
+        <span className="info">Use Any UPI to scan above Qr code and complete the payment </span>
+
+ <div style={{display:"flex",justifyContent:"space-between",width:"100%",padding:"10px"}} >
+          <img style={icon_style} src={PhonePeLogo} alt="phonePe" onclick={()=>handleUpiAppPayment("phonepe")}/>
+          <img  style={icon_style}   src={PaytmLogo} alt="paytm"/>
+          <img  style={icon_style}  src={GpayLogo} alt="Gpay"/>
+          </div>
+      </div>
+      <div className="user-form">
+        <TransactionForm setAmount={setAmount} amount= {amount} />
+      </div>
+    </div>
+  );
+};
+
+export default AddFunds;

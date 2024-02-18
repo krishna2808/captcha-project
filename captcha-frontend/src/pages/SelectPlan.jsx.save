@@ -1,0 +1,89 @@
+import React,{ useRef } from "react";
+import { useEffect, useState } from "react";
+import { useParams, useNavigate } from "react-router-dom";
+import { axiosInstance } from "../utils/fetchUtitls";
+import QrCode from "../images/demo_qr.png";
+import All_upi_icons from "../images/all_upi_icons.png"
+import TransactionForm from "../components/Trasaction";
+
+const AddFunds = () => {
+  const textRef = useRef(null);
+   
+const copyToClipboard = () => {
+    const textToCopy = textRef.current.innerText;
+    if (!navigator.clipboard) {
+      fallbackCopyTextToClipboard(textToCopy);
+      return;
+    }
+    navigator.clipboard.writeText(textToCopy)
+      .then(() => {
+        console.log('Text copied to clipboard!');
+      })
+      .catch(err => {
+        console.error('Failed to copy: ', err);
+      });
+  };
+
+  const fallbackCopyTextToClipboard = (textToCopy) => {
+    var textArea = document.createElement("textarea");
+    textArea.value = textToCopy;
+    document.body.appendChild(textArea);
+    textArea.focus();
+    textArea.select();
+
+    try {
+      document.execCommand('copy');
+      console.log('Text copied to clipboard!');
+    } catch (err) {
+      console.error('Failed to copy: ', err);
+    }
+
+    document.body.removeChild(textArea);
+  };
+
+  const navigate = useNavigate();
+  // const [planData, setPlanData] = useState({
+  //   planName: "",
+  //   planPrice: "",
+  //   planReferrals: "",
+  //   planDailyLimit: "",
+  // });
+  // const { paramValue } = useParams(); // if not found then renavigate to plans page
+  // console.log({paramValue});
+  // if (!paramValue) {
+  //   console.log("no plans selected");
+  //   navigate("/plans");
+  // }
+
+
+  // useEffect(() => {
+  //   // call the backend to provide plan details
+  //   axiosInstance
+  //     .get(`api/plan-details?planId=${paramValue}`, { planId: paramValue })
+  //     .then((res) => {
+  //       //we got to load this page with selected plan details here
+  //       setPlanData(res.data);
+  //     })
+  //     .catch((err) => {
+  //       debugger
+  //       console.log({ err });
+  //     });
+  // }, [paramValue]);
+  // console.log({ planData });
+
+  return (
+    <div className="purchase-plan">
+      <div className="wrapper">
+        <div>        <span className="number" ref={textRef}>+91-9999966666</span> <button onClick={copyToClipboard}>Copy UPI-ID</button> </div>
+        <img className="qr-img" src={QrCode} alt="QrImage" />
+        <span className="info">Use Any UPI to scan above Qr code and complete the payment </span>
+        <img className="upi-img" src={All_upi_icons} alt="pay with any up1 :)"/>
+      </div>
+      <div className="user-form">
+        <TransactionForm setAmount={setAmount} amount= {amount}  />
+      </div>
+    </div>
+  );
+};
+
+export default AddFunds;
